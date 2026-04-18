@@ -1,2 +1,2 @@
 
-KEYWORDS = ["assistance","urgent","issue","problem","error","bug","failed","stuck","help"]
+KEYWORDS = ["assistance","urgent","dev","issue","issues","problem","problems","error","errors","bug","bugs","not working","doesn't work","failed","stuck","can'taccess","can'tlogin","transaction failed","pending","delayed","not received","missing","glitch","scam","suspicious","wrong address","wallet issue","withdrawal pending","deposit not showing","tx hash","transaction hash","gas fee","network issue","refund","claim not working","air drop issue","tokens not received","kyc issue","verification failed","wallet not connecting","bridge failed","swap failed","kyc","help","deposit","helpme","arrive","received"]
