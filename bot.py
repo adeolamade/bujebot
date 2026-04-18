@@ -10,7 +10,7 @@ from keywords import KEYWORDS
 from utils import find_matches
 from translator import translate_text
 
-logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -20,6 +20,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.message
     if not msg or not msg.text:
         return
+
     text = msg.text
     matches = find_matches(text, KEYWORDS)
     if not matches:
@@ -32,9 +33,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     group_name = chat.title if chat else "Unknown Group"
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
+    message_link = "Unavailable"
+    if chat.username:
+        message_link = f"https://t.me/{chat.username}/{msg.message_id}"
+    elif str(chat.id).startswith("-100"):
+        internal_id = str(chat.id)[4:]
+        message_link = f"https://t.me/c/{internal_id}/{msg.message_id}"
+
     translated = await translate_text(text)
 
-    alert = f"🚨 Keyword Alert\n\n👤 {sender}\n👥 {group_name}\n⏰ {timestamp}\n\n{text}\n\n{translated}\n\nMatched: {', '.join(matches)}"
+    alert = f"🚨 Keyword Alert\n\n👤 {sender}\n👥 {group_name}\n⏰ {timestamp}\n🔗 {message_link}\n\n{text}\n\n{translated}\n\nMatched: {', '.join(matches)}"
 
     await context.bot.send_message(chat_id=OWNER_TELEGRAM_ID, text=alert)
 
